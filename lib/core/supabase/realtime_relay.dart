@@ -15,6 +15,7 @@ class RealtimeRelay {
   final _envelopeCtrl = StreamController<Map<String, dynamic>>.broadcast();
   final _typingCtrl = StreamController<Map<String, dynamic>>.broadcast();
   final _presenceCtrl = StreamController<Map<String, dynamic>>.broadcast();
+  final _profileCtrl = StreamController<Map<String, dynamic>>.broadcast();
   final _sessionRevokedCtrl =
       StreamController<Map<String, dynamic>>.broadcast();
 
@@ -23,6 +24,8 @@ class RealtimeRelay {
   Stream<Map<String, dynamic>> get typing => _typingCtrl.stream;
 
   Stream<Map<String, dynamic>> get presence => _presenceCtrl.stream;
+
+  Stream<Map<String, dynamic>> get profile => _profileCtrl.stream;
 
   Stream<Map<String, dynamic>> get sessionRevoked => _sessionRevokedCtrl.stream;
 
@@ -46,6 +49,10 @@ class RealtimeRelay {
         .onBroadcast(
           event: 'presence',
           callback: (payload) => _emit(_presenceCtrl, payload),
+        )
+        .onBroadcast(
+          event: 'profile',
+          callback: (payload) => _emit(_profileCtrl, payload),
         )
         .onBroadcast(
           event: 'sessionRevoked',
@@ -81,6 +88,7 @@ class RealtimeRelay {
     await _envelopeCtrl.close();
     await _typingCtrl.close();
     await _presenceCtrl.close();
+    await _profileCtrl.close();
     await _sessionRevokedCtrl.close();
   }
 }

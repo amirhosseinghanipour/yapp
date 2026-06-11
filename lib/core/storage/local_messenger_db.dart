@@ -191,6 +191,17 @@ class LocalMessengerDb {
     _notifyChat();
   }
 
+  Future<void> updatePeerUsername(String accountId, String? username) async {
+    final db = await _open();
+    final updated = await db.update(
+      'peers',
+      <String, Object?>{'username': username},
+      where: 'account_id = ?',
+      whereArgs: [accountId],
+    );
+    if (updated > 0) _notifyChat();
+  }
+
   Future<void> applyPeerProfile({
     required String accountId,
     required String displayName,

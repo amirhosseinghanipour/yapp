@@ -59,6 +59,7 @@ class MessengerRepositorySupabase implements MessengerRepository {
   StreamSubscription<Map<String, dynamic>>? _envelopeSub;
   StreamSubscription<Map<String, dynamic>>? _typingSub;
   StreamSubscription<Map<String, dynamic>>? _presenceRelaySub;
+  StreamSubscription<Map<String, dynamic>>? _profileRelaySub;
   final Map<String, bool> _typingByPeer = <String, bool>{};
 
   final StreamController<String> _presenceEventCtrl =
@@ -118,6 +119,14 @@ class MessengerRepositorySupabase implements MessengerRepository {
         _presenceEventCtrl.add(acc);
       }
     });
+    await _profileRelaySub?.cancel();
+    _profileRelaySub = _relay.profile.listen((row) {
+      // Server-authoritative username change; profile content stays E2E via
+      // sealed control envelopes.
+      final acc = row['accountId'] as String?;
+      if (acc == null || acc == _self()) return;
+      unawaited(_db.updatePeerUsername(acc, row['username'] as String?));
+    });
     await _pullPending(_self());
   }
 
@@ -126,6 +135,7 @@ class MessengerRepositorySupabase implements MessengerRepository {
     _envelopeSub?.cancel();
     _typingSub?.cancel();
     _presenceRelaySub?.cancel();
+    _profileRelaySub?.cancel();
     _typingCtrl.close();
     _presenceEventCtrl.close();
     _incomingCtrl.close();
