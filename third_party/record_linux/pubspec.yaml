@@ -1,0 +1,24 @@
+name: record_linux
+description: >-
+  Local stub replacing record_linux 0.7.2, which never implemented the
+  record_platform_interface 1.6.0 additions (startStream / hasPermission request)
+  and breaks `flutter build` on the 5.x federation. This app targets Android/iOS,
+  so the real Linux desktop impl is unused — this stub just satisfies the
+  interface (via noSuchMethod) so the build compiles. Remove once on Flutter
+  >=3.44 + record 7.x (whose record_linux is consistent again).
+version: 0.7.2
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.16.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  record_platform_interface: ">=1.0.0 <2.0.0"
+
+flutter:
+  plugin:
+    implements: record
+    platforms:
+      linux:
+        dartPluginClass: RecordLinux

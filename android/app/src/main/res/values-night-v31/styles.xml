@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Android 12+ splash, dark mode. Same pitch-black + 'y' as values-v31;
+         needed because the night-mode qualifier outranks the version qualifier,
+         so values-night would otherwise win on dark-mode API 31+ devices. -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowSplashScreenBackground">@android:color/black</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
+    </style>
+</resources>

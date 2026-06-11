@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- yapp launch splash: pitch-black canvas with the 'y' glyph centered. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@android:color/black" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/ic_launcher_foreground" />
+    </item>
+</layer-list>
