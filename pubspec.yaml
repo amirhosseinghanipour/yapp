@@ -2,7 +2,7 @@ name: yapp
 description: "yapp is an end-to-end encrypted messenger with zero-PII keypair identity."
 publish_to: 'none'
 
-version: 0.1.0+1
+version: 0.1.1+2
 
 environment:
   sdk: ^3.11.4
